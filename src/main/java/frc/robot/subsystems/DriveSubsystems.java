@@ -33,7 +33,12 @@ public class DriveSubsystem extends SubsystemBase {
   // Joystick for controlling the robot
   private final Joystick joystick = new Joystick(0);
 
+  public  Double speed;
+
   public DriveSubsystem() {
+
+    speed= 0.8;
+    
     // Initialize odometry with gyro and encoder data (assuming you have a gyro)
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
   }
@@ -44,11 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
     odometry.update(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
   }
 
-  // Arcade drive using joystick input
-  public void arcadeDrive() {
-    double forward = joystick.getY(); // Forward movement (joystick Y-axis)
-    double rotation = joystick.getX(); // Rotation (joystick X-axis)
-    drivetrain.arcadeDrive(forward, rotation);
+  
   }
 
 }
