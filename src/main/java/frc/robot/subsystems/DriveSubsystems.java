@@ -3,10 +3,9 @@ package frc.main.subsystems;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro; // Import the Gyro class
 
 public class DriveSubsystem extends SubsystemBase {
   
@@ -20,7 +19,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
   private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
 
-  // DifferentialDrive for controlling the robot
+  // DifferentialDrive for controlling the robot (we're using it for tank drive, not arcade)
   private final DifferentialDrive drivetrain = new DifferentialDrive(leftMotors, rightMotors);
 
   // The left and right encoders
@@ -30,26 +29,25 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry to track robot position
   private final DifferentialDriveOdometry odometry;
 
-  // Joystick for controlling the robot
-  private final Joystick joystick = new Joystick(0);
+  // Gyroscope (assuming you are using the ADXRS450_Gyro)
+  private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(); // Declare and instantiate the Gyro
 
-  public  Double speed;
+  // Speed value for control (typically between 0.0 and 1.0)
+  private double speed = 0.8;
 
   public DriveSubsystem() {
-
-    speed= 0.8;
-    
-    // Initialize odometry with gyro and encoder data (assuming you have a gyro)
+    // Initialize odometry with gyro and encoder data
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
   }
 
   @Override
   public void periodic() {
-    // Update odometry periodically
+    // Update odometry periodically using gyro and encoder data
     odometry.update(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
   }
 
-  
+  // Tank drive method: takes separate inputs for left and right motors
+  public void tankDrive(double leftSpeed, double rightSpeed) {
+    drivetrain.tankDrive(leftSpeed * speed, rightSpeed * speed);
   }
-
 }
