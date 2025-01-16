@@ -35,6 +35,12 @@ public class DriveSubsystem extends SubsystemBase {
   // Speed value for control (typically between 0.0 and 1.0)
   private double speed = 0.8;
 
+   // breakers.
+    SparkMaxConfig config = new SparkMaxConfig();
+    config.voltageCompensation(12);
+    config.smartCurrentLimit(DriveConstants.DRIVE_MOTOR_CURRENT_LIMIT);
+
+
   public DriveSubsystem() {
     // Initialize odometry with gyro and encoder data
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
