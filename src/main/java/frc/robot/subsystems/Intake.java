@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.main.subsystems;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax; // For PWM motor controllers like Spark Max or Victor
