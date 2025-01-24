@@ -1,8 +1,11 @@
-package frc.main.subsystems;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.SparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.Encoder;
+
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro; // Import the Gyro class
@@ -10,17 +13,13 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro; // Import the Gyro class
 public class DriveSubsystem extends SubsystemBase {
   
   // Declare motor controllers for left and right sides of the drive
-  private final SparkMax leftMotor1 = new SparkMax(0);  // PWM port 0 for left motor
-  private final SparkMax leftMotor2 = new SparkMax(1);  // PWM port 1 for left motor
-  private final SparkMax rightMotor1 = new SparkMax(2); // PWM port 2 for right motor
-  private final SparkMax rightMotor2 = new SparkMax(3); // PWM port 3 for right motor
-
-  // SpeedControllerGroups to group left and right motors
-  private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftMotor1, leftMotor2);
-  private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightMotor1, rightMotor2);
+  private final Talon leftMotor1 = new Talon(0);  // PWM port 0 for left motor
+  private final Talon leftMotor2 = new Talon(1);  // PWM port 1 for left motor
+  private final Talon rightMotor1 = new Talon(2); // PWM port 2 for right motor
+  private final Talon rightMotor2 = new Talon(3); // PWM port 3 for right motor
 
   // DifferentialDrive for controlling the robot (we're using it for tank drive, not arcade)
-  private final DifferentialDrive drivetrain = new DifferentialDrive(leftMotors, rightMotors);
+  private final DifferentialDrive drivetrain = new DifferentialDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
 
   // The left and right encoders
   private final Encoder leftEncoder = new Encoder(0, 1);  
