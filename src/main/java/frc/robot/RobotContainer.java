@@ -5,11 +5,11 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -21,14 +21,22 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private class DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private DriveSubsystem m_driveSubsystem = new DriveSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick m_driverController =
       new CommandJoystick(OperatorConstants.kDriverControllerPort);
 
+  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_chooser.setDefaultOption("Default Auto", new Command() {
+      @Override
+      public void execute() {
+        // Do nothing
+      }
+    });
     // Configure the trigger bindings
     configureBindings();
   }
@@ -49,16 +57,17 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());*/
-    
+  
   // For tank drive (left and right joystick control)
-    m_driverController.getYButton().whileTrue(new Command() {
-      @Override
-      public void execute() {
-        double leftSpeed = m_driverController.getRawAxis(1); // Left joystick Y-axis
-        double rightSpeed = m_driverController.getRawAxis(5); // Right joystick Y-axis
-        m_driveSubsystem.tankDrive(leftSpeed, rightSpeed); // Call tank drive method
-  }
+ m_driveSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> m_driveSubsystem.tankDrive(
+        
+          m_driverController.getRawAxis(1), // Left joystick Y axis
+          m_driverController.getRawAxis(5)))); // Right joystick Y axis
 
+
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -66,6 +75,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+return m_chooser.getSelected();
   }
-}
+}    
