@@ -5,17 +5,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
 
-
-public class Intakesystem extends SubsystemBase {
+public class Intakesystem extends SubsystemBase { 
   /** Creates a new EmptySubsystem. */
+  
   public Intakesystem() {
     PWMTalonSRX motor1 = new PWMTalonSRX(8);
-    Joystick exampleJoystick = new Joystick(0);
-    
   }
 
   @Override
