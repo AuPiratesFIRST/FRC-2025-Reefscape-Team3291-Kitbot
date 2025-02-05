@@ -6,8 +6,9 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intakesystem;  // Import the intake subsystem
+import frc.robot.commands.IntakeCommand;  // Import the command controlling the intake
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private Intakesystem m_intakeSystem = new Intakesystem();  // Declare intake subsystem
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandJoystick m_driverController =
@@ -38,6 +40,7 @@ public class RobotContainer {
         // Do nothing
       }
     });
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -52,23 +55,31 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  /*  new Trigger(m_exampleSubsystem::exampleCondition)
-      
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());*/
-  
-  // For tank drive (left and right joystick control)
- m_driveSubsystem.setDefaultCommand(
+    // For tank drive (left and right joystick control)
+    m_driveSubsystem.setDefaultCommand(
       new RunCommand(
         () -> m_driveSubsystem.tankDrive(
-        
           m_driverController.getRawAxis(1), // Left joystick Y axis
-          m_driverController.getRawAxis(5)))); // Right joystick Y axis
+          m_driverController.getRawAxis(5)), // Right joystick Y axis
+        m_driveSubsystem
+      )
+    );
 
+    // Set up the intake controls:
+    // Assuming you want to control the intake with buttons:
+    
+    // Example button bindings for controlling the intake:
+    // (Replace with the button numbers you want to use for your intake)
+    
+    // Forward intake control (button "a" on the joystick in this case)
+    new Trigger(() -> m_driverController.getRawButton(1)) // Button A
+        .whileActiveOnce(() -> m_intakeSystem.getIntakeCommand().forward())  // Run the intake forward
 
+    // Reverse intake control (button "b" on the joystick in this case)
+    new Trigger(() -> m_driverController.getRawButton(2)) // Button B
+        .whileActiveOnce(() -> m_intakeSystem.getIntakeCommand().reverse());  // Run the intake in reverse
   }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -76,6 +87,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-return m_chooser.getSelected();
+    return m_chooser.getSelected();
   }
-}    
+}
