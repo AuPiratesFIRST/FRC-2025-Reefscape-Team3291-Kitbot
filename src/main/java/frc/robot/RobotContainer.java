@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -73,11 +72,11 @@ public class RobotContainer {
     
     // Forward intake control (button "a" on the joystick in this case)
     new Trigger(() -> m_driverController.getRawButton(1)) // Button A
-        .whileActiveOnce(() -> m_intakeSystem.getIntakeCommand().forward())  // Run the intake forward
+        .whileActiveOnce(new IntakeCommand(m_intakeSystem));  // Run the intake forward
 
     // Reverse intake control (button "b" on the joystick in this case)
     new Trigger(() -> m_driverController.getRawButton(2)) // Button B
-        .whileActiveOnce(() -> m_intakeSystem.getIntakeCommand().reverse());  // Run the intake in reverse
+        .whileActiveOnce(new IntakeCommand(m_intakeSystem).reverseDirection());  // Run the intake in reverse
   }
 
   /**
