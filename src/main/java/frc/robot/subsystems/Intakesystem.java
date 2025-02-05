@@ -5,13 +5,17 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Intakesystem extends SubsystemBase { 
   /** Creates a new EmptySubsystem. */
   
+  // Declare the CAN motor controller
+  private TalonSRX motor1;
+
   public Intakesystem() {
-    PWMTalonSRX motor1 = new PWMTalonSRX(8);
+    // Initialize the motor with the CAN ID (replace 8 with the actual CAN ID of your motor)
+    motor1 = new TalonSRX(8);
   }
 
   @Override
