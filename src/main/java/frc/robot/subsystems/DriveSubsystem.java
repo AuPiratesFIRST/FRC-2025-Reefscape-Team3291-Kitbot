@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;  // Import CAN TalonSRX
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro; // Import the Gyro class
 
 public class DriveSubsystem extends SubsystemBase {
   
-  // Declare motor controllers for left and right sides of the drive
-  private final PWMTalonSRX leftMotor1 = new PWMTalonSRX(0);  // PWM port 0 for left motor
-  private final PWMTalonSRX leftMotor2 = new PWMTalonSRX(1);  // PWM port 1 for left motor
-  private final PWMTalonSRX rightMotor1 = new PWMTalonSRX(2); // PWM port 2 for right motor
-  private final PWMTalonSRX rightMotor2 = new PWMTalonSRX(3); // PWM port 3 for right motor
+  // Declare motor controllers for left and right sides of the drive using CAN
+  private final TalonSRX leftMotor1 = new TalonSRX(1);  // CAN ID 1 for left motor
+  private final TalonSRX leftMotor2 = new TalonSRX(2);  // CAN ID 2 for left motor
+  private final TalonSRX rightMotor1 = new TalonSRX(3); // CAN ID 3 for right motor
+  private final TalonSRX rightMotor2 = new TalonSRX(4); // CAN ID 4 for right motor
   
-  // Group the left and rith motors 
-  @SuppressWarnings("removal")
+  // Group the left and right motors 
   private final MotorControllerGroup leftMotors = new MotorControllerGroup(leftMotor1, leftMotor2);
-  @SuppressWarnings("removal")
   private final MotorControllerGroup rightMotors = new MotorControllerGroup(rightMotor1, rightMotor2);
 
   // DifferentialDrive for controlling the robot (we're using it for tank drive, not arcade)
@@ -40,20 +38,25 @@ public class DriveSubsystem extends SubsystemBase {
   private double speed = 0.8; 
 
   public DriveSubsystem() {
-    leftMotor1.addFollower(leftMotor2);
-    rightMotor1.addFollower(leftMotor2);
-    // Initialize odometry with gyro and encoder data
-    odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
+    leftMotor1.setInverted(false);
+    leftMotor2.setInverted(false);
+    rightMotor1.setInverted(true);  // Right motors usually need to be inverted
+    rightMotor2.setInverted(true);
+    
+    leftEncoder.setDistancePerPulse(0.05); // Adjust as needed for your robot's encoder
+    rightEncoder.setDistancePerPulse(0.05);
+    
+    odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
+  }
+
+  // Method to drive using tank drive (left and right joystick values)
+  public void tankDrive(double leftSpeed, double rightSpeed) {
+    drivetrain.tankDrive(leftSpeed, rightSpeed);
   }
 
   @Override
   public void periodic() {
-    // Update odometry periodically using gyro and encoder data
+    // Update odometry every period
     odometry.update(gyro.getRotation2d(), leftEncoder.getDistance(), rightEncoder.getDistance());
-  }
-
-  // Tank drive method: takes separate inputs for left and right motors
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-    drivetrain.tankDrive(leftSpeed * speed, rightSpeed * speed);
   }
 }
