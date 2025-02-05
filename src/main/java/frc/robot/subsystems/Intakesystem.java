@@ -8,9 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Intakesystem extends SubsystemBase { 
-  /** Creates a new EmptySubsystem. */
+  /** Creates a new Intakesystem. */
   
-  // Declare the CAN motor controller
   private TalonSRX motor1;
 
   public Intakesystem() {
