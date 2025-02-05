@@ -9,12 +9,12 @@ import frc.robot.subsystems.Intakesystem;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class EmptyCommand extends Command {
+public class IntakeCommand extends Command {
   private final Intakesystem intakeSystem; // Reference to the intake system
   private final TalonSRX motor1; // CAN motor controller
   private double speed; // Variable to control speed and direction
 
-  /** Creates a new EmptyCommand. */
+  /** Creates a new IntakeCommand. */
   public IntakeCommand(Intakesystem intakeSystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSystem = intakeSystem;
