@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intakesystem;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeCommand extends Command {
   private final Intakesystem intakeSystem; // Reference to the intake system
   private final TalonSRX motor1; // CAN motor controller
