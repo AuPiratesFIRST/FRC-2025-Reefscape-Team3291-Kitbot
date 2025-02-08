@@ -4,15 +4,15 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.Intakesystem;  // Import the intake subsystem
-import frc.robot.commands.IntakeCommand;  // Import the command controlling the intake
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;  // Import the intake subsystem
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intakesystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,8 +26,8 @@ public class RobotContainer {
   private Intakesystem m_intakeSystem = new Intakesystem();  // Declare intake subsystem
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandJoystick m_driverController =
-      new CommandJoystick(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
   
@@ -64,19 +64,9 @@ public class RobotContainer {
       )
     );
 
-    // Set up the intake controls:
-    // Assuming you want to control the intake with buttons:
-    
-    // Example button bindings for controlling the intake:
-    // (Replace with the button numbers you want to use for your intake)
-    
-    // Forward intake control (button "a" on the joystick in this case)
-    new Trigger(() -> m_driverController.getRawButton(1)) // Button A
-        .whileActiveOnce(new IntakeCommand(m_intakeSystem));  // Run the intake forward
-
-    // Reverse intake control (button "b" on the joystick in this case)
-    new Trigger(() -> m_driverController.getRawButton(2)) // Button B
-        .whileActiveOnce(new IntakeCommand(m_intakeSystem).reverseDirection());  // Run the intake in reverse
+    // For intake control
+    m_driverController.a().whileTrue(new RunCommand(() -> m_intakeSystem.setIntakeSpeed(), m_intakeSystem));
+    m_driverController.b().whileTrue(new RunCommand(() -> m_intakeSystem.setIntakeReverseSpeed(), m_intakeSystem));
   }
 
   /**
