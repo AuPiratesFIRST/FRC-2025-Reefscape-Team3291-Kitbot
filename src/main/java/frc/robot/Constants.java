@@ -19,7 +19,7 @@ package frc.robot;
 
 public final class Constants {
   private Constants() {
-    // Prevent instantiation
+    // Prevent instantiationvv    
   }
 
   public static final class OperatorConstants {
@@ -35,10 +35,10 @@ public final class Constants {
       // Prevent instantiation
     }
 
-    public static final int kLeftFrontMotorPort = 33;
-    public static final int kLeftBackMotorPort = 31;
-    public static final int kRightFrontMotorPort = 30;
-    public static final int kRightBackMotorPort = 32;
+    public static final int kLeftFrontMotorPort = 25;
+    public static final int kLeftBackMotorPort = 18;
+    public static final int kRightFrontMotorPort = 19;
+    public static final int kRightBackMotorPort = 21;
 
     public static final boolean leftInverted = false;
     public static final boolean rightInverted = true;
@@ -53,7 +53,7 @@ public final class Constants {
     public IntakeConstants() {
       // Prevent instantiation
     }
-    public static final int kIntakeMotorPort = 15; // Replace with the actual CAN ID of your motor
+    public static final int kIntakeMotorPort = 7; // Replace with the actual CAN ID of your motor
     public static final double kIntakeSpeed = 0.5; // Speed to run the intake motor
     public static final double kIntakeReverseSpeed = -0.5; // Speed to run the intake motor in reverse
     public static final double kIntakeStopSpeed = 0.0; // Speed to stop the intake motor
