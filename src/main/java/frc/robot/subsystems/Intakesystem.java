@@ -4,20 +4,21 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intakesystem extends SubsystemBase {
   /** Creates a new Intakesystem. */
 
-  private CANSparkMax intakeMotor;
+  private SparkMax intakeMotor;
 
   public Intakesystem() {
     // Initialize the motor with the CAN ID (replace 8 with the actual CAN ID of
     // your motor)
-    intakeMotor = new CANSparkMax(Constants.IntakeConstants.kIntakeMotorPort, MotorType.kBrushless); // Replace with the actual CAN ID of your motor
+    intakeMotor = new SparkMax(Constants.IntakeConstants.kIntakeMotorPort, MotorType.kBrushless); // Replace with the actual CAN ID of your motor
     intakeMotor.setInverted(Constants.IntakeConstants.kIntakeInverted); // Set motor inversion
     intakeMotor.set(0); // Set initial speed to 0
   }
