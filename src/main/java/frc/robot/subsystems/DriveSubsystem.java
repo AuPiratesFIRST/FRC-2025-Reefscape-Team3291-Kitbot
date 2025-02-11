@@ -1,11 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.*;
-import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,8 +20,9 @@ public class DriveSubsystem extends SubsystemBase {
     rightFrontMotor.setInverted(Constants.DriveConstants.rightInverted);
     rightBackMotor.setInverted(Constants.DriveConstants.rightInverted);
 
-  leftBackMotor.follow(leftFrontMotor, true);  
-  rightBackMotor.follow(rightFrontMotor, true); 
+  // leftBackMotor. addFollower(leftFrontMotor);  
+  leftBackMotor.isFollower();
+  rightBackMotor.isFollower(); 
 
     // Set the motor speed to 0 initially (this can be considered as brake mode for SparkMax)
     leftFrontMotor.set(0);
