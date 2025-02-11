@@ -53,7 +53,7 @@ public final class Constants {
     public IntakeConstants() {
       // Prevent instantiation
     }
-    public static final int kIntakeMotorPort = 7; // Replace with the actual CAN ID of your motor
+    public static final int kIntakeMotorPort = 28; // Replace with the actual CAN ID of your motor
     public static final double kIntakeSpeed = 0.5; // Speed to run the intake motor
     public static final double kIntakeReverseSpeed = -0.5; // Speed to run the intake motor in reverse
     public static final double kIntakeStopSpeed = 0.0; // Speed to stop the intake motor

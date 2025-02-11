@@ -2,9 +2,11 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com. revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.config.SparkBaseConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,38 +25,34 @@ SparkMax rigthfollower;
   private final SparkMax rightFrontMotor = new SparkMax(Constants.DriveConstants.kRightFrontMotorPort, MotorType.kBrushless); // CAN ID 3 for right motor
   private final SparkMax rightBackMotor = new SparkMax(Constants.DriveConstants.kRightBackMotorPort, MotorType.kBrushless); // CAN ID 4 for right motor
 
-  SparkMaxConfig globalConfig = new SparkMaxConfig(); 
+  private SparkMaxConfig globalConfig = new SparkMaxConfig(); 
   SparkMaxConfig leftBackMotorConfig = new SparkMaxConfig();
   SparkMaxConfig rightFrontMotorConfig = new SparkMaxConfig();
   SparkMaxConfig rightBackMotorConfig = new SparkMaxConfig();
 
-  public SparkMaxConfig getGlobalConfig() {
-      return globalConfig;
-  }
-
-  globalConfig  
-  .setSmartCurrentLimit(50)
-  .idleMode(IdleMode.kBrake);
-
-  leftBackMotorConfig
-  .apply(globalConfig)
-  .inverterted(true);
-
-  rigthLeaderConfig
-  .apply(globalConfig)
-  .inverterted(true);
-
-  rigthfollowerConfig
-  .apply(globalConfig)
-  inverterted(true);
-
-
 
   @SuppressWarnings("deprecation")
   public DriveSubsystem() {
+    globalConfig
+    .smartCurrentLimit(50)
+    .idleMode(IdleMode.kBrake);
+  
+    leftBackMotorConfig
+    .apply(globalConfig)
+    .inverted (true);
+  
+    rightFrontMotorConfig
+    .apply(globalConfig)
+    .inverted(true);
+  
+    rightFrontMotorConfig
+    .apply(globalConfig)
+    .inverted(true);
+
+    
     // Set the motor inversion based on the constants
-    leftFrontMotor.configure(globalConfig, ResetMode.kResetSafeParameters, PersistMode. kPersistParameters);
-    leftBackMotor.configure(leftBackMotorConfig, ResetMode.kResetSafeParameters, PersistMode. kPersistParameters);
+    leftLeader.configure(globalConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    leftBackMotor.configure(leftBackMotorConfig,ResetMode.kResetSafeParameters, PersistMode. kPersistParameters);
     rightFrontMotor.configure(rightFrontMotorConfig, ResetMode.kResetSafeParameters, PersistMode. kPersistParameters);
     rightBackMotor.configure(rightBackMotorConfig, ResetMode.kResetSafeParameters, PersistMode. kPersistParameters);
 
