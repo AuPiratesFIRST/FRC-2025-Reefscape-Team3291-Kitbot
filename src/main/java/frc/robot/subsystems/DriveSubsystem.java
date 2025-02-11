@@ -26,8 +26,8 @@ public class DriveSubsystem extends SubsystemBase {
     rightFrontMotor.setInverted(Constants.DriveConstants.rightInverted);
     rightBackMotor.setInverted(Constants.DriveConstants.rightInverted);
 
-    leftBackMotor.follow(leftFrontMotor);  // Correct: set leftBackMotor to follow leftFrontMotor
-    rightBackMotor.follow(rightFrontMotor);  // Correct: set rightBackMotor to follow rightFrontMotor
+    leftBackMotor.follow(leftFrontMotor); // Set left back motor to follow left front motor
+    rightBackMotor.follow(rightFrontMotor); // Set right back motor to follow right front motor
 
     // Set the motor speed to 0 initially (this can be considered as brake mode for SparkMax)
     leftFrontMotor.set(0);
