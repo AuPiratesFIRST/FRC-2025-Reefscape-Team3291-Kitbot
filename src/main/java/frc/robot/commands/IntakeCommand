@@ -6,8 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intakesystem;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class IntakeCommand extends Command {
   private final Intakesystem intakeSystem; // Reference to the intake system
@@ -18,7 +16,8 @@ public class IntakeCommand extends Command {
   public IntakeCommand(Intakesystem intakeSystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSystem = intakeSystem;
-    motor1 = new CANSparkMax(8, MotorType.kBrushless); // Replace 8 with your actual CAN ID for the motor
+    private final SparkMax motor1 = new SparkMax(Constants.DriveConstants.kIntakeMotorPort,
+    MotorType.kBrushed); // new SparkMax(28, MotorType.kBrushed); // Replace 8 with your actual CAN ID for the motor
 
     addRequirements(intakeSystem); // Make sure the command requires the intake subsystem
   }
