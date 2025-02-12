@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com. revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkMax;
@@ -14,7 +14,7 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 SparkMax leftLeader;
 SparkMax leftfollower;
-SparkMax rigthLeader;
+SparkMax rightLeader;
 SparkMax rigthfollower;
 
 
@@ -33,6 +33,15 @@ SparkMax rigthfollower;
 
   @SuppressWarnings("deprecation")
   public DriveSubsystem() {
+  private SparkMaxConfig globalConfig = new SparkMaxConfig(); 
+  SparkMaxConfig leftBackMotorConfig = new SparkMaxConfig();
+  SparkMaxConfig rightFrontMotorConfig = new SparkMaxConfig();
+  SparkMaxConfig rightBackMotorConfig = new SparkMaxConfig();
+
+    
+leftLeader = leftFrontMotor;
+rightLeader = rightFrontMotor;
+    
     globalConfig
     .smartCurrentLimit(50)
     .idleMode(IdleMode.kBrake);
@@ -45,7 +54,7 @@ SparkMax rigthfollower;
     .apply(globalConfig)
     .inverted(true);
   
-    rightFrontMotorConfig
+    rightBackMotorConfig
     .apply(globalConfig)
     .inverted(true);
 
