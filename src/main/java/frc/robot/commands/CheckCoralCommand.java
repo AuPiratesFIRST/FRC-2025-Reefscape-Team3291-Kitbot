@@ -4,10 +4,10 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.RangeSubsystem;
 
-public class CheckCoralCommand extends CommandBase {
+public class CheckCoralCommand extends Command {
   private final RangeSubsystem rangeSubsystem;
   private final double detectionThreshold;
 
