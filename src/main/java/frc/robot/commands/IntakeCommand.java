@@ -10,7 +10,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intakesystem;
-import com.revrobotics.spark.SparkMax;
+
 
 
 public class IntakeCommand extends Command {
