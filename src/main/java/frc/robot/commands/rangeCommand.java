@@ -4,39 +4,50 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.range;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.RangeSubsystem;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class rangeCommand extends Command {
-  /** Creates a new EmptyCommand. */
-  public rangeCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class CheckCoralCommand extends CommandBase {
+  private final RangeSubsystem rangeSubsystem;
+  private final double detectionThreshold;
+
+  /**
+   * Creates a new CheckCoralCommand.
+   * @param rangeSubsystem The subsystem that provides CANrange data.
+   * @param detectionThreshold The distance threshold below which the coral is considered “detected.”
+   */
+  public CheckCoralCommand(RangeSubsystem rangeSubsystem, double detectionThreshold) {
+    this.rangeSubsystem = rangeSubsystem;
+    this.detectionThreshold = detectionThreshold;
+    addRequirements(rangeSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
-    m_bRange1 = m_range1.getIsDetected().getValue();
-    m_GE_bRange1.setBoolean(m_bRange1);
-    if (m_bRange1) {
-        m_GE_distRange1.setDouble(m_range1.getDistance().getValueAsDouble());
+    System.out.println("Initializing coral detection...");
+  }
+
+  @Override
+  public void execute() {
+    boolean detected = rangeSubsystem.isObjectDetected();
+    double distance = rangeSubsystem.getDistance();
+
+    // If an object is detected and it is within the threshold distance, assume it is coral.
+    if (detected && distance < detectionThreshold) {
+      System.out.println("Coral detected! Distance: " + distance);
     } else {
-        m_GE_distRange1.setDouble(0.0);
-    }}
+      System.out.println("No coral detected. Distance: " + distance);
+    }
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // This command runs continuously.
     return false;
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    System.out.println("Coral detection command ended.");
   }
 }
