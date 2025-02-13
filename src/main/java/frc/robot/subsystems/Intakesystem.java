@@ -35,4 +35,9 @@ public class Intakesystem extends SubsystemBase {
   public void setIntakeReverseSpeed() {
     intakeMotor.set(Constants.IntakeConstants.kIntakeReverseSpeed); // Set motor speed to reverse intake speed
   }
+
+  public void seIntakeStopSpeed() {
+    intakeMotor.set(Constants.IntakeConstants.kIntakeStopSpeed); // Set motor speed to reverse intake speed
+  }
+
 }

@@ -68,6 +68,7 @@ public class RobotContainer {
     // For intake control
     m_driverController.a().whileTrue(new RunCommand(() -> m_intakeSystem.setIntakeSpeed(), m_intakeSystem));
     m_driverController.b().whileTrue(new RunCommand(() -> m_intakeSystem.setIntakeReverseSpeed(), m_intakeSystem));
+    m_driverController.x().whileTrue(new RunCommand(() -> m_intakeSystem.seIntakeStopSpeed(), m_intakeSystem));
   }
 
   /**
