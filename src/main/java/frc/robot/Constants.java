@@ -60,4 +60,11 @@ public final class Constants {
     public static final boolean kIntakeInverted = false; // Whether the intake motor is inverted
 
   }
+
+  public static final class CANrangeConstants {
+    public static final int kCANrangeId = 0;
+    public static final String kCANrangeCANbus = "canivore";
+      
+    
+  }
 }
