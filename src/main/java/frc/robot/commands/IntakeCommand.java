@@ -4,20 +4,25 @@
 
 package frc.robot.commands;
 
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intakesystem;
+import com.revrobotics.spark.SparkMax;
+
 
 public class IntakeCommand extends Command {
   private final Intakesystem intakeSystem; // Reference to the intake system
-  private final CANSparkMax motor1; // CAN motor controller
+  private final SparkMax intakeMotor; // CAN motor controller
   private double speed; // Variable to control speed and direction
 
   /** Creates a new IntakeCommand. */
   public IntakeCommand(Intakesystem intakeSystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.intakeSystem = intakeSystem;
-    private final SparkMax motor1 = new SparkMax(Constants.DriveConstants.kIntakeMotorPort,
-    MotorType.kBrushed); // new SparkMax(28, MotorType.kBrushed); // Replace 8 with your actual CAN ID for the motor
+  intakeMotor = new SparkMax(Constants.IntakeConstants.kIntakeMotorPort, MotorType.kBrushed);// new SparkMax(28, MotorType.kBrushed); // Replace 8 with your actual CAN ID for the motor
 
     addRequirements(intakeSystem); // Make sure the command requires the intake subsystem
   }
@@ -33,14 +38,14 @@ public class IntakeCommand extends Command {
   @Override
   public void execute() {
     // Here you can control the motor with CAN commands, setting speed and direction
-    motor1.set(speed); // Control motor speed and direction (no need for ControlMode)
+    intakeMotor.set(speed); // Control motor speed and direction (no need for ControlMode)
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     // Stop the motor when the command ends or is interrupted
-    motor1.set(0); // Stop the motor
+    intakeMotor.set(0); // Stop the motor
   }
 
   // Returns true when the command should end.
